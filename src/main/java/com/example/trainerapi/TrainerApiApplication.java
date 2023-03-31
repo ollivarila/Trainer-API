@@ -7,15 +7,16 @@ import com.example.trainerapi.models.repositories.WorkoutRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
+/**
+ * Entrypoint for the application
+ */
 @RequiredArgsConstructor
 @SpringBootApplication
 public class TrainerApiApplication {
@@ -27,6 +28,11 @@ public class TrainerApiApplication {
 
 	private final WorkoutRepository workoutRepository;
 
+
+	/**
+	 * Method for debugging
+	 * @return Commandlinerunner that gets executed on startup
+	 */
 	public CommandLineRunner demo(UserRepository userRepository, ApplicationContext ctx) {
 		return (args) -> {
 			User user = new User("John","password");
@@ -60,6 +66,10 @@ public class TrainerApiApplication {
 		};
 	}
 
+	/**
+	 * Method for debugging BEANS
+	 * @param ctx
+	 */
 	private void beans(ApplicationContext ctx){
 		System.out.println("BEANS!!");
 		String[] beanNames = ctx.getBeanDefinitionNames();

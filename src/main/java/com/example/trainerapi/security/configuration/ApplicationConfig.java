@@ -16,6 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.SecureRandom;
 
+/**
+ * Various beans used for authentication.
+ */
 @RequiredArgsConstructor
 @Configuration
 public class ApplicationConfig {

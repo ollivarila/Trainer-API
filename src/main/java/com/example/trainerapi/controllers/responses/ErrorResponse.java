@@ -1,5 +1,6 @@
 package com.example.trainerapi.controllers.responses;
 
+
 public class ErrorResponse {
     private final String error;
 

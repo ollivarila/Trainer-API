@@ -17,12 +17,21 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * This filter is responsible for validating the JWT token sent by the client.
+ */
 @RequiredArgsConstructor
 @Service
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
 
+    /**
+     * {@inheritDoc}
+     * <br>
+     * This method is called by the filter chain. It will validate the JWT token sent by the client.
+     * If the token is valid, the filter will set the user authentication in the SecurityContext.
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         String auth = request.getHeader("Authorization");

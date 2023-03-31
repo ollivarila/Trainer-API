@@ -35,7 +35,7 @@ public class UserService {
         List<Workout> workouts = user.getWorkouts();
         user.setWorkouts(removeWorkout(workouts, workoutId));
         userRepository.save(user);
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().build();
     }
 
     private List<Workout> removeWorkout(List<Workout> workouts, String workoutId) {

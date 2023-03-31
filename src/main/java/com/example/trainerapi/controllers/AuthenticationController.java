@@ -7,17 +7,30 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller that handles user authentication and registration
+ */
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
+    /**
+     * Authenticates a user
+     * @param req LoginRequest object containing username and password
+     * @return ResponseEntity containing the JWT token
+     */
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticate(@RequestBody LoginRequest req) {
         return authenticationService.authenticate(req);
     }
 
+    /**
+     * Registers a user
+     * @param req RegisterRequest object containing username, password
+     * @return ResponseEntity containing the JWT token
+     */
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest req){
         return authenticationService.register(req);
