@@ -20,10 +20,11 @@ import java.io.IOException;
 /**
  * This filter is responsible for validating the JWT token sent by the client.
  */
-@RequiredArgsConstructor
+// todo ei tarvi @RequiredArgsConstructor
 @Service
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    // todo @Autowired
     private final UserDetailsService userDetailsService;
 
     /**

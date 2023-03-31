@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/auth")
-@RequiredArgsConstructor
+// todo ei tarvi tässä, lombokia tarvii vain Entityissä
+//@RequiredArgsConstructor
 public class AuthenticationController {
+
+    // todo @Autowired
     private final AuthenticationService authenticationService;
 
     /**

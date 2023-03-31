@@ -5,6 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
+// todo lisää @Repository
 public interface WorkoutRepository extends CrudRepository<Workout, String> {
 
     List<Workout> findByUserId(String userId);

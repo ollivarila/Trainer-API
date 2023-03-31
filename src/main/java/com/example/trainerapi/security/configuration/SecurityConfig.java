@@ -17,9 +17,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+// todo ei tarvi @RequiredArgsConstructor
 public class SecurityConfig {
 
+    // todo @Autowired
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
 

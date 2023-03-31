@@ -16,9 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+
+// todo ei tarvi tässä
+// @RequiredArgsConstructor
 public class AuthenticationService {
 
+    // todo nämä kaikki
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;

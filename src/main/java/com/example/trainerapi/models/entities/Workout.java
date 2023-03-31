@@ -11,6 +11,7 @@ import org.hibernate.jdbc.Work;
 import java.util.Date;
 import java.util.List;
 
+// todo sä et välttämättä tarvi näitä kaikkia annotaatiotoita @Entity on tärkein jos tämä on sun db taulu
 @Getter
 @Setter
 @NoArgsConstructor

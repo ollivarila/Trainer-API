@@ -7,6 +7,7 @@ import com.example.trainerapi.models.repositories.WorkoutRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * Entrypoint for the application
  */
-@RequiredArgsConstructor
+// todo tässä kohtaa applikaatiossa ei tarvi @RequiredArgsConstructor
 @SpringBootApplication
 public class TrainerApiApplication {
 
@@ -26,6 +27,7 @@ public class TrainerApiApplication {
 		SpringApplication.run(TrainerApiApplication.class, args);
 	}
 
+	// todo @Autowired
 	private final WorkoutRepository workoutRepository;
 
 

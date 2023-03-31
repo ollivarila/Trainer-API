@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/user")
-@RequiredArgsConstructor
+// todo ei tarvi @RequiredArgsConstructor
 public class UserController {
+
+    // todo @Autowired
     private final UserService userService;
 
     /**

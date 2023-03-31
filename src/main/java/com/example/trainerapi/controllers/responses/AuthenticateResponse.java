@@ -3,6 +3,7 @@ package com.example.trainerapi.controllers.responses;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+//todo onko nämä annotaatiot tarkoituksella vai ainoastaan kokeilua?
 @AllArgsConstructor
 @Getter
 public class AuthenticateResponse {

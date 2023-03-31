@@ -19,7 +19,7 @@ import java.security.SecureRandom;
 /**
  * Various beans used for authentication.
  */
-@RequiredArgsConstructor
+// todo ei tarvi @RequiredArgsConstructor
 @Configuration
 public class ApplicationConfig {
 
