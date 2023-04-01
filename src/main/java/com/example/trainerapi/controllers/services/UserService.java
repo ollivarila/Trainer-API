@@ -1,6 +1,6 @@
 package com.example.trainerapi.controllers.services;
 
-import com.example.trainerapi.controllers.responses.WorkoutResponse;
+import com.example.trainerapi.models.entities.ExerciseType;
 import com.example.trainerapi.models.entities.User;
 import com.example.trainerapi.models.entities.Workout;
 import com.example.trainerapi.models.repositories.UserRepository;
@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -23,44 +23,39 @@ public class UserService {
     private final WorkoutRepository workoutRepository;
 
     public ResponseEntity<?> getWorkouts(String authHeader) {
-        String username = parseUsername(authHeader);
-        User user = userRepository.findByUsername(username);
-        System.out.println(user);
+        User user = getUserFromAuthHeader(authHeader);
         return ResponseEntity.ok(user.getWorkouts());
     }
 
-    public ResponseEntity<?> deleteWorkout(String authHeader, String workoutId) {
-        String username = parseUsername(authHeader);
-        User user = userRepository.findByUsername(username);
-        List<Workout> workouts = user.getWorkouts();
-        user.setWorkouts(removeWorkout(workouts, workoutId));
-        userRepository.save(user);
+    public ResponseEntity<?> deleteWorkout(UUID workoutId) {
+        System.out.println("Deleting workout: " + workoutId);
+        workoutRepository.deleteById(workoutId);
         return ResponseEntity.ok().build();
     }
 
-    private List<Workout> removeWorkout(List<Workout> workouts, String workoutId) {
-        return workouts
-                .stream()
-                .filter(workout -> !workout.getId().equals(workoutId))
-                .collect(Collectors.toList());
-    }
 
     public ResponseEntity<?> addWorkout(String authHeader, Workout workout) {
-        String username = parseUsername(authHeader);
-        User user = userRepository.findByUsername(username);
+        User user = getUserFromAuthHeader(authHeader);
         workout.setUser(user);
         workoutRepository.save(workout);
         return ResponseEntity.ok(workout);
     }
 
-    private String parseUsername(String authHeader) {
-        String token = authHeader.substring(7);
-        return JwtTokenUtil.getUsername(token);
+    public ResponseEntity<?> getExerciseTypes(String auth) {
+        User user = getUserFromAuthHeader(auth);
+        return ResponseEntity.ok(user.getExerciseTypes());
     }
 
-    public ResponseEntity<?> getExerciseTypes(String auth) {
-        String username = parseUsername(auth);
-        User user = userRepository.findByUsername(username);
-        return ResponseEntity.ok(user.getExerciseTypes());
+    public ResponseEntity<?> addExerciseType(String auth, ExerciseType exerciseType) {
+        User user = getUserFromAuthHeader(auth);
+        user.getExerciseTypes().add(exerciseType);
+        userRepository.save(user);
+        return ResponseEntity.ok(exerciseType);
+    }
+
+    private User getUserFromAuthHeader(String header){
+        String token = header.substring(7);
+        String username = JwtTokenUtil.getUsername(token);
+        return userRepository.findByUsername(username);
     }
 }

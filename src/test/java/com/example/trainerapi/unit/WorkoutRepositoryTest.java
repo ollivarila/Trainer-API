@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class WorkoutRepositoryTest {
@@ -42,5 +41,17 @@ public class WorkoutRepositoryTest {
 
         Workout foundWorkout = workoutRepository.findByUserId(user.getId()).get(0);
         assertEquals(workout.getId(), foundWorkout.getId());
+    }
+
+    @Test
+    public void deletesAll(){
+        Workout workout = new Workout();
+        workout.setName("test");
+        workoutRepository.save(workout);
+        workoutRepository.findAll();
+        assertTrue(workoutRepository.findAll().iterator().hasNext());
+
+        workoutRepository.deleteAll();
+        assertFalse(workoutRepository.findAll().iterator().hasNext());
     }
 }

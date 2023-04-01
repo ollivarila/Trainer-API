@@ -10,16 +10,15 @@ import org.hibernate.jdbc.Work;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @Data
 @Entity
 public class Workout {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
     private String name;
     private Date workoutStarted;
     private Date workoutEnded;

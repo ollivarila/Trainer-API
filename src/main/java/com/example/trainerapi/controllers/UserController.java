@@ -1,10 +1,13 @@
 package com.example.trainerapi.controllers;
 
 import com.example.trainerapi.controllers.services.UserService;
+import com.example.trainerapi.models.entities.ExerciseType;
 import com.example.trainerapi.models.entities.Workout;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 /**
  * Controller for user related endpoints.
@@ -39,13 +42,12 @@ public class UserController {
 
     /**
      * Delete a workout for the user.
-     * @param auth The authorization header.
-     * @param workoutId The id of the workout to delete.
+     * @param id The id of the workout to delete.
      * @return A 200 OK response.
      */
-    @DeleteMapping("/workouts/{workoutId}")
-    public ResponseEntity<?> deleteWorkout(@RequestHeader("Authorization") String auth, @PathVariable String workoutId) {
-        return userService.deleteWorkout(auth, workoutId);
+    @DeleteMapping("/workouts/{id}")
+    public ResponseEntity<?> deleteWorkout(@PathVariable UUID id) {
+        return userService.deleteWorkout(id);
     }
 
     /**
@@ -56,5 +58,10 @@ public class UserController {
     @GetMapping("/exercisetypes")
     public ResponseEntity<?> getExerciseTypes(@RequestHeader("Authorization") String auth) {
         return userService.getExerciseTypes(auth);
+    }
+
+    @PostMapping("/exercisetypes")
+    public ResponseEntity<?> addExerciseType(@RequestHeader("Authorization") String auth, @RequestBody ExerciseType exerciseType) {
+        return userService.addExerciseType(auth, exerciseType);
     }
 }
