@@ -44,12 +44,13 @@ public class UserController {
 
     /**
      * Delete a workout for the user.
+     * @param auth The authorization header.
      * @param id The id of the workout to delete.
      * @return A 200 OK response.
      */
     @DeleteMapping("/workouts/{id}")
-    public ResponseEntity<?> deleteWorkout(@PathVariable UUID id) {
-        return userService.deleteWorkout(id);
+    public ResponseEntity<?> deleteWorkout(@RequestHeader("Authorization") String auth, @PathVariable UUID id) {
+        return userService.deleteWorkout(auth, id);
     }
 
     /**
@@ -65,5 +66,16 @@ public class UserController {
     @PostMapping("/exercisetypes")
     public ResponseEntity<?> addExerciseType(@RequestHeader("Authorization") String auth, @RequestBody ExerciseType exerciseType) {
         return userService.addExerciseType(auth, exerciseType);
+    }
+
+    /**
+     * Delete an exercise type.
+     * @param id The id of the exercise type to delete.
+     * @param auth The authorization header.
+     * @return A 200 OK response.
+     */
+    @DeleteMapping("/exercisetypes/{id}")
+    public ResponseEntity<?> deleteExerciseType(@RequestHeader("Authorization") String auth, @PathVariable UUID id) {
+        return userService.deleteExerciseType(auth, id);
     }
 }

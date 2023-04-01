@@ -90,4 +90,11 @@ public class MockHttpServletRequestBuilderFactory {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
     }
+
+    public RequestBuilder deleteExerciseTypeRequest(String token, UUID id) {
+        return delete("/api/user/exercisetypes/" + id)
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.trainerapi.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -27,6 +28,7 @@ public class ExerciseType {
      * User can have many exercise types, thus ManyToOne
      */
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     public ExerciseType() {

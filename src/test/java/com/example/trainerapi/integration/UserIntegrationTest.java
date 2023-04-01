@@ -149,6 +149,20 @@ public class UserIntegrationTest {
                 .andExpect(jsonPath("$", Matchers.hasSize(2)));
     }
 
+    @Test
+    public void deletesExerciseType() throws Exception {
+        createUser("user");
+        createExerciseType();
+        User user = userRepository.findByUsername("user");
+        ExerciseType created = exerciseTypeRepository.findByUserId(user.getId()).get(0);
+        String token = JwtTokenUtil.generate("user");
+        mockMvc.perform(requestFactory.deleteExerciseTypeRequest(token, created.getId()))
+                .andExpect(status().isOk());
+        Iterable<ExerciseType> exerciseTypes = exerciseTypeRepository.findAll();
+        boolean shouldBeFalse = exerciseTypes.iterator().hasNext();
+        assertThat(shouldBeFalse).isFalse();
+    }
+
 
 
 }

@@ -36,9 +36,9 @@ public class UserService {
         return ResponseEntity.ok(workoutRepository.findByUserId(user.getId()));
     }
 
-    public ResponseEntity<?> deleteWorkout(UUID workoutId) {
-        System.out.println("Deleting workout: " + workoutId);
-        workoutRepository.deleteById(workoutId);
+    public ResponseEntity<?> deleteWorkout(String authHeader, UUID workoutId) {
+        User user = getUserFromAuthHeader(authHeader);
+        workoutRepository.deleteByIdAndUser_Id(workoutId, user.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -66,5 +66,12 @@ public class UserService {
         String token = header.substring(7);
         String username = JwtTokenUtil.getUsername(token);
         return userRepository.findByUsername(username);
+    }
+
+
+    public ResponseEntity<?> deleteExerciseType(String auth, UUID id) {
+        User user = getUserFromAuthHeader(auth);
+        exerciseTypeRepository.deleteByIdAndUser_Id(id, user.getId());
+        return ResponseEntity.ok().build();
     }
 }
