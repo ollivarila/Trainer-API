@@ -3,7 +3,6 @@ package com.example.trainerapi.models.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -12,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 // todo sä et välttämättä tarvi näitä kaikkia annotaatiotoita @Entity on tärkein jos tämä on sun db taulu
-@Getter
+// todo general description of entity and relations
 @Setter
 @NoArgsConstructor
 @Data

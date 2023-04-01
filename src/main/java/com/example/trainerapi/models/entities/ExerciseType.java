@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.UUID;
 
+// todo general description of entity and relations
 @Data
 @Entity
 public class ExerciseType {

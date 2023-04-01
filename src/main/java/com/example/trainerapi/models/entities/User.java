@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+// todo general description of entity and relations
 @Data
 @NoArgsConstructor
 @Entity

@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// todo Refactor using assertJ
 @SpringBootTest
 public class JwtTokenUtilTest {
 

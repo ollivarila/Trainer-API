@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+
+// todo general description of entity and relations
 @Data
 @NoArgsConstructor
 @Entity

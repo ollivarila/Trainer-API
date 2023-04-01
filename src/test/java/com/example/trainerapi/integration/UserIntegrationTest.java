@@ -8,7 +8,6 @@ import com.example.trainerapi.models.repositories.ExerciseTypeRepository;
 import com.example.trainerapi.models.repositories.UserRepository;
 import com.example.trainerapi.models.repositories.WorkoutRepository;
 import com.example.trainerapi.security.util.JwtTokenUtil;
-import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -17,9 +16,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
