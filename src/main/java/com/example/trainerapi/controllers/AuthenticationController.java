@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
  * Controller that handles user authentication and registration
  */
 @RestController
-@RequestMapping("/auth")
 // todo ei tarvi tässä, lombokia tarvii vain Entityissä
-//@RequiredArgsConstructor
+@RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
 
     // todo @Autowired
