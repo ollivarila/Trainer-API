@@ -1,18 +1,12 @@
 package com.example.trainerapi.requestbody;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public class LoginRequest {
 
     private String username;
     private String password;
-
-    public LoginRequest() {
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 }

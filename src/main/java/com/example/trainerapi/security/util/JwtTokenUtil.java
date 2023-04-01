@@ -1,8 +1,6 @@
 package com.example.trainerapi.security.util;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import org.springframework.lang.NonNull;
-import org.springframework.security.core.userdetails.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,18 +28,18 @@ public class JwtTokenUtil {
         return Jwts.builder()
                 .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, convertBase64(secret))
+                .signWith(SignatureAlgorithm.HS512, base64Secret())
                 .compact();
     }
 
     /**
      * Converts the given string to a base64 encoded string.
-     * @param str the string to convert
+     *
      * @return the converted string
      */
-    private static String convertBase64(String str) {
+    private static String base64Secret() {
         Encoder encoder = Base64.getEncoder();
-        return new String(encoder.encode(str.getBytes()));
+        return new String(encoder.encode(JwtTokenUtil.secret.getBytes()));
     }
 
     /**
@@ -62,7 +60,7 @@ public class JwtTokenUtil {
      */
     private static boolean isTokenExpired(String token) {
         Date expiration = Jwts.parser()
-                .setSigningKey(convertBase64(secret))
+                .setSigningKey(base64Secret())
                 .parseClaimsJws(token)
                 .getBody()
                 .getExpiration();
@@ -86,7 +84,7 @@ public class JwtTokenUtil {
      */
     private static String parseSubject(String token) {
         return Jwts.parser()
-                .setSigningKey(convertBase64(secret))
+                .setSigningKey(base64Secret())
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
