@@ -54,4 +54,16 @@ public class WorkoutRepositoryTest {
         workoutRepository.deleteAll();
         assertFalse(workoutRepository.findAll().iterator().hasNext());
     }
+
+    @Test
+    public void deletesOne(){
+        Workout workout = new Workout();
+        workout.setName("test");
+        workoutRepository.save(workout);
+        workoutRepository.findAll();
+        assertTrue(workoutRepository.findAll().iterator().hasNext());
+
+        workoutRepository.deleteById(workout.getId());
+        assertFalse(workoutRepository.findAll().iterator().hasNext());
+    }
 }

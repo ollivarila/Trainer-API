@@ -9,12 +9,23 @@ import java.util.UUID;
 @Entity
 public class ExerciseType {
 
+    /**
+     * Exercise type id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    /**
+     * Exercise type name
+     */
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    /**
+     * User who created the exercise type.
+     * User can have many exercise types, thus ManyToOne
+     */
+    @ManyToOne
     private User user;
 
     public ExerciseType() {

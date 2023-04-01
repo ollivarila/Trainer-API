@@ -18,16 +18,46 @@ import java.util.UUID;
 @Data
 @Entity
 public class Workout {
+
+    /**
+     * Workout id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    /**
+     * Workout name
+     */
     private String name;
+
+    /**
+     * Workout start date
+     */
     private Date workoutStarted;
+
+    /**
+     * Workout end date
+     */
     private Date workoutEnded;
+
+    /**
+     * Whether the workout is a preset workout or not
+     */
     private boolean isPreset;
+
+    /**
+     * User who created the workout.
+     * User can have many workouts, thus ManyToOne
+     */
     @JsonIgnore
     @ManyToOne
     private User user;
+
+    /**
+     * List of exercises in the workout.
+     * Workout can have many exercises, thus OneToMany
+     */
     @OneToMany(cascade = CascadeType.ALL)
     private List<Exercise> exercises;
     @Override

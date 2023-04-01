@@ -12,16 +12,24 @@ import java.util.UUID;
 @Entity
 public class Exercise {
 
+    /**
+     * Exercise id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    /**
+     * Exercise type
+     * Exercise can have one exercise type and many exercises can have the same exercise type, thus ManyToOne
+     */
     @ManyToOne
     private ExerciseType exerciseType;
+
+    /**
+     * List of sets in the exercise.
+     * Exercise can have many sets, thus OneToMany
+     */
     @OneToMany(cascade = CascadeType.ALL)
     private List<ExerciseSet> sets;
-
-    public Exercise(ExerciseType exerciseType, List<ExerciseSet> sets) {
-        this.exerciseType = exerciseType;
-        this.sets = sets;
-    }
 }

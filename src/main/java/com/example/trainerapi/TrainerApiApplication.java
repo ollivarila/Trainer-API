@@ -57,14 +57,8 @@ public class TrainerApiApplication {
 			log.info("-------------------------------");
 
 			User savedUser = userRepository.findById(user.getId()).get();
-			List<Workout> workouts = savedUser.getWorkouts();
 
 
-			log.info("Workouts len: " + workouts.size());
-
-			for (Workout w : workouts) {
-				log.info(w.toString());
-			}
 		};
 	}
 

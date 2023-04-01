@@ -3,10 +3,12 @@ package com.example.trainerapi.controllers.services;
 import com.example.trainerapi.models.entities.ExerciseType;
 import com.example.trainerapi.models.entities.User;
 import com.example.trainerapi.models.entities.Workout;
+import com.example.trainerapi.models.repositories.ExerciseTypeRepository;
 import com.example.trainerapi.models.repositories.UserRepository;
 import com.example.trainerapi.models.repositories.WorkoutRepository;
 import com.example.trainerapi.security.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +18,22 @@ import java.util.stream.Collectors;
 
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final WorkoutRepository workoutRepository;
+    private final ExerciseTypeRepository exerciseTypeRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository, WorkoutRepository workoutRepository, ExerciseTypeRepository exerciseTypeRepository) {
+        this.userRepository = userRepository;
+        this.workoutRepository = workoutRepository;
+        this.exerciseTypeRepository = exerciseTypeRepository;
+    }
 
     public ResponseEntity<?> getWorkouts(String authHeader) {
         User user = getUserFromAuthHeader(authHeader);
-        return ResponseEntity.ok(user.getWorkouts());
+        return ResponseEntity.ok(workoutRepository.findByUserId(user.getId()));
     }
 
     public ResponseEntity<?> deleteWorkout(UUID workoutId) {
@@ -43,13 +52,13 @@ public class UserService {
 
     public ResponseEntity<?> getExerciseTypes(String auth) {
         User user = getUserFromAuthHeader(auth);
-        return ResponseEntity.ok(user.getExerciseTypes());
+        return ResponseEntity.ok(exerciseTypeRepository.findByUserId(user.getId()));
     }
 
     public ResponseEntity<?> addExerciseType(String auth, ExerciseType exerciseType) {
         User user = getUserFromAuthHeader(auth);
-        user.getExerciseTypes().add(exerciseType);
-        userRepository.save(user);
+        exerciseType.setUser(user);
+        exerciseTypeRepository.save(exerciseType);
         return ResponseEntity.ok(exerciseType);
     }
 

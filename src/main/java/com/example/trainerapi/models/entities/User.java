@@ -17,16 +17,22 @@ import java.util.UUID;
 @Table(name = "users")
 public class User implements UserDetails {
 
+    /**
+     * User id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String username;
-    private String password;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Workout> workouts = new ArrayList<>();
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<ExerciseType> exerciseTypes = new ArrayList<>();
 
+    /**
+     * Username
+     */
+    private String username;
+
+    /**
+     * Password (hashed)
+     */
+    private String password;
 
     public User(String username, String password) {
         this.username = username;
