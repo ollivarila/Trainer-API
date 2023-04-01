@@ -6,10 +6,10 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.jdbc.Work;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 // todo sä et välttämättä tarvi näitä kaikkia annotaatiotoita @Entity on tärkein jos tämä on sun db taulu
 @Getter
@@ -20,7 +20,7 @@ import java.util.List;
 public class Workout {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
     private String name;
     private Date workoutStarted;
     private Date workoutEnded;

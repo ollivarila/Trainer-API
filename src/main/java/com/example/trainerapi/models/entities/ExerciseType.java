@@ -1,33 +1,26 @@
 package com.example.trainerapi.models.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+import java.util.UUID;
+
+@Data
 @Entity
 public class ExerciseType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    protected ExerciseType() {}
+    public ExerciseType() {
+    }
 
     public ExerciseType(String name) {
-        this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 
