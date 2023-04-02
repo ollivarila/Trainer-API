@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 
+// todo remove all useless log statements from everywhere
 /**
  * Entrypoint for the application
  */
@@ -33,30 +34,9 @@ public class TrainerApiApplication {
 	 * Method for debugging
 	 * @return Commandlinerunner that gets executed on startup
 	 */
-	public CommandLineRunner demo(UserRepository userRepository, ApplicationContext ctx) {
+	public CommandLineRunner demo() {
 		return (args) -> {
-			User user = new User("John","password");
-
-			userRepository.save(user);
-
-			log.info("Users found with findAll():");
-			log.info("-------------------------------");
-			for (User trainerUser : userRepository.findAll()) {
-				log.info(trainerUser.toString());
-			}
-
-			Workout workout = new Workout();
-			workout.setName("Workout 1");
-			workout.setUser(user);
-
-			workoutRepository.save(workout);
-
-			log.info("Workouts: ");
-			log.info("-------------------------------");
-
-			User savedUser = userRepository.findById(user.getId()).get();
-
-
+			log.info("STARTING THE APPLICATION");
 		};
 	}
 

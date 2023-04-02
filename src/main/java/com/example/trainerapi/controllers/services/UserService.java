@@ -7,14 +7,11 @@ import com.example.trainerapi.models.repositories.ExerciseTypeRepository;
 import com.example.trainerapi.models.repositories.UserRepository;
 import com.example.trainerapi.models.repositories.WorkoutRepository;
 import com.example.trainerapi.security.util.JwtTokenUtil;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -24,6 +21,7 @@ public class UserService {
     private final WorkoutRepository workoutRepository;
     private final ExerciseTypeRepository exerciseTypeRepository;
 
+    // todo send proper error messages if operations fail (e.g. workout not found)
     @Autowired
     public UserService(UserRepository userRepository, WorkoutRepository workoutRepository, ExerciseTypeRepository exerciseTypeRepository) {
         this.userRepository = userRepository;

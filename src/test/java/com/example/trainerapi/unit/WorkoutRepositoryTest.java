@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// todo test for deleteByIdAndUser_Id method
 @SpringBootTest
 public class WorkoutRepositoryTest {
 
