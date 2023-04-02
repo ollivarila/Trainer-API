@@ -1,6 +1,5 @@
 package com.example.trainerapi.security.util;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Base64;
 import java.util.Base64.Encoder;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Utility class for generating and validating JWT tokens.
@@ -16,8 +14,7 @@ import java.util.Objects;
 public class JwtTokenUtil {
     private static final long EXPIRATION_TIME = 10 * 24 * 60 * 60 * 1000; // 10 days
 
-    private static final Dotenv dotenv = Dotenv.configure().load();
-    private static final String secret = Objects.requireNonNull(dotenv.get("JWT_SECRET"));
+    private static final String secret = System.getenv("JWT_SECRET");
 
     /**
      * Generates a JWT token for the given username.
