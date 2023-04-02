@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        JAVA_HOME = "/usr/lib/jdk-17/"
+    }
     stages {
         stage("Modify gradlew"){
             steps{
