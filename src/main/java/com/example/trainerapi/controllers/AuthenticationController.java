@@ -41,12 +41,14 @@ public class AuthenticationController {
         return authenticationService.register(req);
     }
 
+    // todo maybe not needed
     @PostMapping("/logout")
     public void logout(@RequestBody LoginRequest req){
         System.out.println("LOGOUT");
         System.out.println(req.getUsername());
     }
 
+    // todo remove
     @GetMapping ("/test")
     public String test(){
         System.out.println("TEST");
