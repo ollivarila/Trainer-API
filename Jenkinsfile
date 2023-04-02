@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        JAVA_HOME = "/usr/lib/jdk-17/"
+        JAVA_HOME = "/usr/lib/jdk-17/bin"
     }
     stages {
         stage("Modify gradlew"){
