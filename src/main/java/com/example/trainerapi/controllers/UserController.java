@@ -3,7 +3,7 @@ package com.example.trainerapi.controllers;
 import com.example.trainerapi.controllers.services.UserService;
 import com.example.trainerapi.models.entities.ExerciseType;
 import com.example.trainerapi.models.entities.Workout;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +15,14 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/api/user")
-// todo ei tarvi @RequiredArgsConstructor
 public class UserController {
 
-    // todo @Autowired
     private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * Get all workouts for the user.

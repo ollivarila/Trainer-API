@@ -3,6 +3,7 @@ package com.example.trainerapi.security.configuration;
 import com.example.trainerapi.models.entities.User;
 import com.example.trainerapi.models.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,11 +20,15 @@ import java.security.SecureRandom;
 /**
  * Various beans used for authentication.
  */
-// todo ei tarvi @RequiredArgsConstructor
 @Configuration
 public class ApplicationConfig {
 
     private final UserRepository userRepository;
+
+    @Autowired
+    public ApplicationConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {

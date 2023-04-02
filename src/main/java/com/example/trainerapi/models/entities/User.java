@@ -11,7 +11,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-// todo general description of entity and relations
+
+/**
+ * Represents a user. User has a username and a password. <br>
+ * <b>User</b> has a <b>OneToMany</b> relation to <b>Workout</b>, meaning that one user can have many workouts. <br>
+ * <b>User</b> has a <b>OneToMany</b> relation to <b>Exercise</b>, meaning that one user can have many exercises. <br>
+ */
 @Data
 @NoArgsConstructor
 @Entity

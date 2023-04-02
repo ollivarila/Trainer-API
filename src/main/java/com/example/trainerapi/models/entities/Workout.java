@@ -4,15 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-// todo sä et välttämättä tarvi näitä kaikkia annotaatiotoita @Entity on tärkein jos tämä on sun db taulu
-// todo general description of entity and relations
-@Setter
+
+/**
+ *  Represents a workout created by user. Workout contains name, startDate, endDate, isPreset and a list of exercises. <br>
+ *  <b>Workout</b> has a <b>ManyToOne</b> relation to <b>User</b>, meaning that one user can have many workouts. <br>
+ *  <b>Workout</b> has a <b>OneToMany</b> relation to <b>Exercise</b>, meaning that one workout can have many exercises. <br>
+ */
 @NoArgsConstructor
 @Data
 @Entity

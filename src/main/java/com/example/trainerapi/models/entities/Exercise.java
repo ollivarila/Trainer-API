@@ -7,7 +7,12 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 
-// todo general description of entity and relations
+/**
+ * Represents an exercise created by user. Exercise contains it's exerciseType also known as the name of the exercise and a list of sets. <br>
+ * <b>Exercise</b> has a <b>ManyToOne</b> relation to <b>ExerciseType</b>, meaning that one exercise type can be used in many exercises. <br>
+ * <b>Exercise</b> has a <b>OneToMany</b> relation to <b>ExerciseSet</b>, meaning that one exercise can have many sets. <br>
+ * <b>Exercise</b> has a <b>ManyToOne</b> relation to <b>Workout</b>, meaning that one workout can have many exercises. <br>
+ */
 @Data
 @NoArgsConstructor
 @Entity

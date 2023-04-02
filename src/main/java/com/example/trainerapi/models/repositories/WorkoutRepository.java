@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface WorkoutRepository extends CrudRepository<Workout, String> {
+public interface WorkoutRepository extends CrudRepository<Workout, UUID> {
 
     List<Workout> findByUserId(UUID userId);
 

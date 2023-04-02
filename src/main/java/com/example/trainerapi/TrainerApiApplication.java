@@ -4,7 +4,6 @@ import com.example.trainerapi.models.entities.User;
 import com.example.trainerapi.models.entities.Workout;
 import com.example.trainerapi.models.repositories.UserRepository;
 import com.example.trainerapi.models.repositories.WorkoutRepository;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import java.util.List;
 
 /**
  * Entrypoint for the application
  */
-// todo tässä kohtaa applikaatiossa ei tarvi @RequiredArgsConstructor
 @SpringBootApplication
 public class TrainerApiApplication {
 
@@ -26,11 +23,12 @@ public class TrainerApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TrainerApiApplication.class, args);
 	}
-
-	// todo @Autowired
 	private final WorkoutRepository workoutRepository;
 
-
+	@Autowired
+	public TrainerApiApplication(WorkoutRepository workoutRepository) {
+		this.workoutRepository = workoutRepository;
+	}
 	/**
 	 * Method for debugging
 	 * @return Commandlinerunner that gets executed on startup

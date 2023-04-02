@@ -3,7 +3,7 @@ package com.example.trainerapi.controllers;
 import com.example.trainerapi.controllers.services.AuthenticationService;
 import com.example.trainerapi.requestbody.LoginRequest;
 import com.example.trainerapi.requestbody.RegisterRequest;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.*;
  * Controller that handles user authentication and registration
  */
 @RestController
-// todo ei tarvi tässä, lombokia tarvii vain Entityissä
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
 public class AuthenticationController {
 
-    // todo @Autowired
     private final AuthenticationService authenticationService;
+
+    @Autowired
+    public AuthenticationController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
 
     /**
      * Authenticates a user

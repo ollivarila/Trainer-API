@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 
-// todo general description of entity and relations
+/**
+ * Represents a set of an exercise. Set contains reps and weight. <br>
+ * <b>ExerciseSet</b> has a <b>ManyToOne</b> relation to <b>Exercise</b>, meaning that one exercise can have many sets. <br>
+ */
 @Data
 @NoArgsConstructor
 @Entity
