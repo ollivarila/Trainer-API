@@ -12,7 +12,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh './gradlew cleanBuildCache'
+                sh './gradlew build'
             }
         }
         stage('Test') {
