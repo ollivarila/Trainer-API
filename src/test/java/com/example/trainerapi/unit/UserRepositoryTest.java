@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class UserRepositoryTest {
@@ -25,15 +25,15 @@ public class UserRepositoryTest {
         userRepository.save(new User("admin", "password"));
         boolean exists = userRepository.existsTrainerUserByUsername("admin");
         boolean shouldNotExist = userRepository.existsTrainerUserByUsername("admin2");
-        assertTrue(exists);
-        assertFalse(shouldNotExist);
+        assertThat(exists).isTrue();
+        assertThat(shouldNotExist).isFalse();
     }
 
     @Test
     public void findByUsernameWorks() {
         userRepository.save(new User("admin", "password"));
         User user = userRepository.findByUsername("admin");
-        assertNotNull(user);
-        assertEquals("admin", user.getUsername());
+        assertThat(user).isNotNull();
+        assertThat(user.getUsername()).isEqualTo("admin");
     }
 }

@@ -1,13 +1,15 @@
 package com.example.trainerapi.controllers.responses;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 @Getter
 public class AuthenticateResponse {
 
-    private String token;
+    private final String token;
+
+    private AuthenticateResponse(String token) {
+        this.token = token;
+    }
 
     public static AuthenticateResponse of(String token) {
         return new AuthenticateResponse(token);

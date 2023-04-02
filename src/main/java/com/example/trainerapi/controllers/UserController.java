@@ -3,7 +3,7 @@ package com.example.trainerapi.controllers;
 import com.example.trainerapi.controllers.services.UserService;
 import com.example.trainerapi.models.entities.ExerciseType;
 import com.example.trainerapi.models.entities.Workout;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +15,14 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/api/user")
-@RequiredArgsConstructor
 public class UserController {
+
     private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * Get all workouts for the user.
@@ -42,12 +47,16 @@ public class UserController {
 
     /**
      * Delete a workout for the user.
+<<<<<<< HEAD
+=======
+     * @param auth The authorization header.
+>>>>>>> fixes
      * @param id The id of the workout to delete.
      * @return A 200 OK response.
      */
     @DeleteMapping("/workouts/{id}")
-    public ResponseEntity<?> deleteWorkout(@PathVariable UUID id) {
-        return userService.deleteWorkout(id);
+    public ResponseEntity<?> deleteWorkout(@RequestHeader("Authorization") String auth, @PathVariable UUID id) {
+        return userService.deleteWorkout(auth, id);
     }
 
     /**
@@ -63,5 +72,16 @@ public class UserController {
     @PostMapping("/exercisetypes")
     public ResponseEntity<?> addExerciseType(@RequestHeader("Authorization") String auth, @RequestBody ExerciseType exerciseType) {
         return userService.addExerciseType(auth, exerciseType);
+    }
+
+    /**
+     * Delete an exercise type.
+     * @param id The id of the exercise type to delete.
+     * @param auth The authorization header.
+     * @return A 200 OK response.
+     */
+    @DeleteMapping("/exercisetypes/{id}")
+    public ResponseEntity<?> deleteExerciseType(@RequestHeader("Authorization") String auth, @PathVariable UUID id) {
+        return userService.deleteExerciseType(auth, id);
     }
 }

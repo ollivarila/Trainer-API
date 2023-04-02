@@ -9,8 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
+// todo test for deleteByIdAndUser_Id method
 @SpringBootTest
 public class WorkoutRepositoryTest {
 
@@ -28,7 +29,7 @@ public class WorkoutRepositoryTest {
 
     @Test
     public void repositoryLoads() {
-        assertNotNull(workoutRepository);
+        assertThat(workoutRepository).isNotNull();
     }
 
     @Test
@@ -40,7 +41,7 @@ public class WorkoutRepositoryTest {
         workoutRepository.save(workout);
 
         Workout foundWorkout = workoutRepository.findByUserId(user.getId()).get(0);
-        assertEquals(workout.getId(), foundWorkout.getId());
+        assertThat(workout.getId()).isEqualTo(foundWorkout.getId());
     }
 
     @Test
@@ -49,9 +50,21 @@ public class WorkoutRepositoryTest {
         workout.setName("test");
         workoutRepository.save(workout);
         workoutRepository.findAll();
-        assertTrue(workoutRepository.findAll().iterator().hasNext());
+        assertThat(workoutRepository.findAll().iterator().hasNext()).isTrue();
 
         workoutRepository.deleteAll();
-        assertFalse(workoutRepository.findAll().iterator().hasNext());
+        assertThat(workoutRepository.findAll().iterator().hasNext()).isFalse();
+    }
+
+    @Test
+    public void deletesOne(){
+        Workout workout = new Workout();
+        workout.setName("test");
+        workoutRepository.save(workout);
+        workoutRepository.findAll();
+        assertThat(workoutRepository.findAll().iterator().hasNext()).isTrue();
+
+        workoutRepository.deleteById(workout.getId());
+        assertThat(workoutRepository.findAll().iterator().hasNext()).isFalse();
     }
 }

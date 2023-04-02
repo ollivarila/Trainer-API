@@ -11,22 +11,34 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+
+/**
+ * Represents a user. User has a username and a password. <br>
+ * <b>User</b> has a <b>OneToMany</b> relation to <b>Workout</b>, meaning that one user can have many workouts. <br>
+ * <b>User</b> has a <b>OneToMany</b> relation to <b>Exercise</b>, meaning that one user can have many exercises. <br>
+ */
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
 
+    /**
+     * User id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String username;
-    private String password;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Workout> workouts = new ArrayList<>();
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<ExerciseType> exerciseTypes = new ArrayList<>();
 
+    /**
+     * Username
+     */
+    private String username;
+
+    /**
+     * Password (hashed)
+     */
+    private String password;
 
     public User(String username, String password) {
         this.username = username;

@@ -4,6 +4,7 @@ import com.example.trainerapi.integration.mock.MockHttpServletRequestBuilderFact
 import com.example.trainerapi.models.entities.ExerciseType;
 import com.example.trainerapi.models.entities.User;
 import com.example.trainerapi.models.entities.Workout;
+import com.example.trainerapi.models.repositories.ExerciseTypeRepository;
 import com.example.trainerapi.models.repositories.UserRepository;
 import com.example.trainerapi.models.repositories.WorkoutRepository;
 import com.example.trainerapi.security.util.JwtTokenUtil;
@@ -15,15 +16,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+// todo more tests
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserIntegrationTest {
@@ -40,10 +40,14 @@ public class UserIntegrationTest {
     @Autowired
     private MockHttpServletRequestBuilderFactory requestFactory;
 
+    @Autowired
+    private ExerciseTypeRepository exerciseTypeRepository;
+
     @AfterEach
     public void afterEach() {
-        userRepository.deleteAll();
+        exerciseTypeRepository.deleteAll();
         workoutRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
@@ -51,7 +55,7 @@ public class UserIntegrationTest {
         createUser("user");
         createWorkout("user");
         Workout created = workoutRepository.findAll().iterator().next();
-        assertEquals("test", created.getName());
+        assertThat(created.getName()).isEqualTo("test");
     }
 
     private void createUser(String username) throws Exception {
@@ -95,12 +99,14 @@ public class UserIntegrationTest {
         createWorkout("user");
         User user = userRepository.findByUsername("user");
         Workout created = workoutRepository.findByUserId(user.getId()).get(0);
+        System.out.println("CREATED WORKOUT");
+        System.out.println(created);
         String token = JwtTokenUtil.generate("user");
         mockMvc.perform(requestFactory.deleteWorkoutRequest(token, created.getId()))
                 .andExpect(status().isOk());
         Iterable<Workout> workouts = workoutRepository.findAll();
         boolean shouldBeFalse = workouts.iterator().hasNext();
-        assertFalse(shouldBeFalse);
+        assertThat(shouldBeFalse).isFalse();
     }
 
     @Test
@@ -109,10 +115,10 @@ public class UserIntegrationTest {
         workout.setName("test");
         workoutRepository.save(workout);
         workoutRepository.findAll();
-        assertTrue(workoutRepository.findAll().iterator().hasNext());
+        assertThat(workoutRepository.findAll().iterator().hasNext()).isTrue();
 
         workoutRepository.deleteAll();
-        assertFalse(workoutRepository.findAll().iterator().hasNext());
+        assertThat(workoutRepository.findAll().iterator().hasNext()).isFalse();
     }
 
     @Test
@@ -120,9 +126,10 @@ public class UserIntegrationTest {
         createUser("user");
         createExerciseType();
         User user = userRepository.findByUsername("user");
-        assertEquals(1, user.getExerciseTypes().size());
-        ExerciseType created = user.getExerciseTypes().get(0);
-        assertEquals("test", created.getName());
+        List<ExerciseType> exerciseTypes = exerciseTypeRepository.findByUserId(user.getId());
+        assertThat(exerciseTypes.size()).isEqualTo(1);
+        ExerciseType created = exerciseTypes.get(0);
+        assertThat(created.getName()).isEqualTo("test");
     }
 
     private void createExerciseType() throws Exception {
@@ -142,6 +149,17 @@ public class UserIntegrationTest {
                 .andExpect(jsonPath("$", Matchers.hasSize(2)));
     }
 
-
-
+    @Test
+    public void deletesExerciseType() throws Exception {
+        createUser("user");
+        createExerciseType();
+        User user = userRepository.findByUsername("user");
+        ExerciseType created = exerciseTypeRepository.findByUserId(user.getId()).get(0);
+        String token = JwtTokenUtil.generate("user");
+        mockMvc.perform(requestFactory.deleteExerciseTypeRequest(token, created.getId()))
+                .andExpect(status().isOk());
+        Iterable<ExerciseType> exerciseTypes = exerciseTypeRepository.findAll();
+        boolean shouldBeFalse = exerciseTypes.iterator().hasNext();
+        assertThat(shouldBeFalse).isFalse();
+    }
 }
