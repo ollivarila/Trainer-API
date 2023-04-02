@@ -14,7 +14,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Entity
-public class ExerciseSet {
+public class ExerciseSet implements Clearable {
 
     /**
      * Exercise set id
@@ -41,5 +41,10 @@ public class ExerciseSet {
     @Override
     public String toString(){
         return String.format("ExerciseSet[id=%s, reps='%s', weight='%s']", id, reps, weight);
+    }
+
+    @Override
+    public void clearIds() {
+        id = null;
     }
 }

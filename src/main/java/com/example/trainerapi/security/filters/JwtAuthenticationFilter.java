@@ -54,8 +54,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         boolean validated = JwtTokenUtil.validate(token, userDetails);
 
-        System.out.println("Token validated: " + validated);
-
         if(!validated) {
             filterChain.doFilter(request, response);
             return;

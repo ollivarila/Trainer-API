@@ -2,8 +2,6 @@ package com.example.trainerapi.models.repositories;
 
 import com.example.trainerapi.models.entities.ExerciseType;
 import jakarta.transaction.Transactional;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +13,12 @@ public interface ExerciseTypeRepository extends CrudRepository<ExerciseType, UUI
 
     List<ExerciseType> findByUserId(UUID userId);
 
+    /**
+     * Deletes an exercise type by id and user id
+     * @param id the id of the exercise type
+     * @param user the id of the user
+     * @return the number of deleted rows
+     */
     @Transactional
-    void deleteByIdAndUser_Id(UUID id, UUID user);
+    int deleteByIdAndUser_Id(UUID id, UUID user);
 }

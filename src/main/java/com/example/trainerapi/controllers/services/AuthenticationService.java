@@ -8,7 +8,6 @@ import com.example.trainerapi.models.repositories.UserRepository;
 import com.example.trainerapi.requestbody.LoginRequest;
 import com.example.trainerapi.requestbody.RegisterRequest;
 import com.example.trainerapi.security.util.JwtTokenUtil;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,14 +29,12 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
     public ResponseEntity<?> authenticate(LoginRequest req){
-        System.out.println("LOGIN");
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword()));
         User user = userRepository.findByUsername(req.getUsername());
         String token = JwtTokenUtil.generate(user.getUsername());
         return ResponseEntity.ok(AuthenticateResponse.of(token));
     }
     public ResponseEntity<?> register(RegisterRequest req) {
-        System.out.println("REGISTER");
         if(userRepository.existsTrainerUserByUsername(req.getUsername())){
             return ResponseEntity.badRequest().body(ErrorResponse.of("Username already exists"));
         }

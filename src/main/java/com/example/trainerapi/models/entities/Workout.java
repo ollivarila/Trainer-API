@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Entity
-public class Workout {
+public class Workout implements Clearable{
 
     /**
      * Workout id
@@ -59,10 +60,37 @@ public class Workout {
      * List of exercises in the workout.
      * Workout can have many exercises, thus OneToMany
      */
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Exercise> exercises;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Exercise> exercises = new ArrayList<>();
+
+    public Workout(Workout workout){
+        this.id = workout.id;
+        this.name = workout.name;
+        this.workoutStarted = workout.workoutStarted;
+        this.workoutEnded = workout.workoutEnded;
+        this.isPreset = workout.isPreset;
+        this.user = workout.user;
+        this.exercises = workout.exercises;
+    }
     @Override
     public String toString(){
         return String.format("Workout[id=%s, name='%s']", id, name);
+    }
+
+    @Override
+    public void clearIds() {
+        id = null;
+        for (Exercise exercise : exercises) {
+            exercise.clearIds();
+        }
+    }
+
+    public void updateWith(Workout workout){
+        this.name = workout.name;
+        this.workoutStarted = workout.workoutStarted;
+        this.workoutEnded = workout.workoutEnded;
+        this.isPreset = workout.isPreset;
+        this.user = workout.user;
+        this.exercises = workout.exercises;
     }
 }

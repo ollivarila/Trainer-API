@@ -97,4 +97,13 @@ public class MockHttpServletRequestBuilderFactory {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
     }
+
+    public RequestBuilder updateWorkoutRequest(String token, Workout workout) {
+        String json = createJson(workout);
+        return put("/api/user/workouts/" + workout.getId())
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
+    }
 }

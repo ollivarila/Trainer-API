@@ -1,6 +1,7 @@
 package com.example.trainerapi.integration;
 
 import com.example.trainerapi.integration.mock.MockHttpServletRequestBuilderFactory;
+import com.example.trainerapi.models.entities.Exercise;
 import com.example.trainerapi.models.entities.ExerciseType;
 import com.example.trainerapi.models.entities.User;
 import com.example.trainerapi.models.entities.Workout;
@@ -8,6 +9,7 @@ import com.example.trainerapi.models.repositories.ExerciseTypeRepository;
 import com.example.trainerapi.models.repositories.UserRepository;
 import com.example.trainerapi.models.repositories.WorkoutRepository;
 import com.example.trainerapi.security.util.JwtTokenUtil;
+import org.assertj.core.api.Condition;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -99,8 +101,6 @@ public class UserIntegrationTest {
         createWorkout("user");
         User user = userRepository.findByUsername("user");
         Workout created = workoutRepository.findByUserId(user.getId()).get(0);
-        System.out.println("CREATED WORKOUT");
-        System.out.println(created);
         String token = JwtTokenUtil.generate("user");
         mockMvc.perform(requestFactory.deleteWorkoutRequest(token, created.getId()))
                 .andExpect(status().isOk());
@@ -161,5 +161,40 @@ public class UserIntegrationTest {
         Iterable<ExerciseType> exerciseTypes = exerciseTypeRepository.findAll();
         boolean shouldBeFalse = exerciseTypes.iterator().hasNext();
         assertThat(shouldBeFalse).isFalse();
+    }
+
+    @Test
+    public void createsNewWorkout() throws Exception {
+        createUser("user");
+        createWorkout("user");
+        Workout created = workoutRepository.findAll().iterator().next();
+        created.setPreset(true);
+        Exercise exercise = new Exercise();
+        created.getExercises().add(exercise);
+        mockMvc.perform(requestFactory.createWorkoutRequest(JwtTokenUtil.generate("user"), created))
+                .andExpect(status().isOk());
+
+        User user = userRepository.findByUsername("user");
+
+        List<Workout> workouts = workoutRepository.findByUserId(user.getId());
+        Condition<Workout> condition = new Condition<>(Workout::isPreset, "preset");
+        assertThat(workouts.size()).isEqualTo(2);
+        assertThat(workouts).areAtMost(1, condition);
+    }
+
+    @Test
+    public void updatesWorkout() throws Exception {
+        createUser("user");
+        createWorkout("user");
+        Workout created = workoutRepository.findAll().iterator().next();
+        created.setName("updated");
+        created.setPreset(true);
+
+        mockMvc.perform(requestFactory.updateWorkoutRequest(JwtTokenUtil.generate("user"), created))
+                .andExpect(status().isOk());
+
+        Workout workout = workoutRepository.findById(created.getId()).get();
+        assertThat(workout.getName()).isEqualTo("updated");
+        assertThat(workout.isPreset()).isTrue();
     }
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Entity
-public class Exercise {
+public class Exercise implements Clearable {
 
     /**
      * Exercise id
@@ -37,5 +38,13 @@ public class Exercise {
      * Exercise can have many sets, thus OneToMany
      */
     @OneToMany(cascade = CascadeType.ALL)
-    private List<ExerciseSet> sets;
+    private List<ExerciseSet> sets = new ArrayList<>();
+
+    @Override
+    public void clearIds() {
+        id = null;
+        for (ExerciseSet set : sets) {
+            set.clearIds();
+        }
+    }
 }

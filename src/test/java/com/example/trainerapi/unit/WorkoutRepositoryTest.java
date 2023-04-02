@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// todo test for deleteByIdAndUser_Id method
 @SpringBootTest
 public class WorkoutRepositoryTest {
 
@@ -65,6 +64,21 @@ public class WorkoutRepositoryTest {
         assertThat(workoutRepository.findAll().iterator().hasNext()).isTrue();
 
         workoutRepository.deleteById(workout.getId());
+        assertThat(workoutRepository.findAll().iterator().hasNext()).isFalse();
+    }
+
+    @Test
+    public void deleteByIdAndUserId(){
+        User user = new User("John","password");
+        userRepository.save(user);
+        Workout workout = new Workout();
+        workout.setName("test");
+        workout.setUser(user);
+        workoutRepository.save(workout);
+        Iterable<Workout> workouts = workoutRepository.findAll();
+        assertThat(workouts.iterator().hasNext()).isTrue();
+
+        workoutRepository.deleteByIdAndUser_Id(workout.getId(), user.getId());
         assertThat(workoutRepository.findAll().iterator().hasNext()).isFalse();
     }
 }

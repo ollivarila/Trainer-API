@@ -35,7 +35,7 @@ public class UserController {
     }
 
     /**
-     * Add a workout for the user.
+     * Add a workout for the user. This always creates a new workout.
      * @param auth The authorization header.
      * @param workout The workout to add.
      * @return The added workout.
@@ -47,16 +47,25 @@ public class UserController {
 
     /**
      * Delete a workout for the user.
-<<<<<<< HEAD
-=======
      * @param auth The authorization header.
->>>>>>> fixes
      * @param id The id of the workout to delete.
      * @return A 200 OK response.
      */
     @DeleteMapping("/workouts/{id}")
     public ResponseEntity<?> deleteWorkout(@RequestHeader("Authorization") String auth, @PathVariable UUID id) {
         return userService.deleteWorkout(auth, id);
+    }
+
+    /**
+     * Update a workout for the user.
+     * @param auth The authorization header.
+     * @param id The id of the workout to update.
+     * @param workout The workout to update.
+     * @return The updated workout.
+     */
+    @PutMapping("/workouts/{id}")
+    public ResponseEntity<?> updateWorkout(@RequestHeader("Authorization") String auth, @PathVariable UUID id, @RequestBody Workout workout) {
+        return userService.updateWorkout(auth, id, workout);
     }
 
     /**
@@ -84,4 +93,5 @@ public class UserController {
     public ResponseEntity<?> deleteExerciseType(@RequestHeader("Authorization") String auth, @PathVariable UUID id) {
         return userService.deleteExerciseType(auth, id);
     }
+
 }

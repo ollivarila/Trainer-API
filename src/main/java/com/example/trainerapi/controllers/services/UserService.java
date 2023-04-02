@@ -7,10 +7,12 @@ import com.example.trainerapi.models.repositories.ExerciseTypeRepository;
 import com.example.trainerapi.models.repositories.UserRepository;
 import com.example.trainerapi.models.repositories.WorkoutRepository;
 import com.example.trainerapi.security.util.JwtTokenUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -36,7 +38,10 @@ public class UserService {
 
     public ResponseEntity<?> deleteWorkout(String authHeader, UUID workoutId) {
         User user = getUserFromAuthHeader(authHeader);
-        workoutRepository.deleteByIdAndUser_Id(workoutId, user.getId());
+        int deletedAmount = workoutRepository.deleteByIdAndUser_Id(workoutId, user.getId());
+        if(deletedAmount == 0){
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok().build();
     }
 
@@ -44,6 +49,7 @@ public class UserService {
     public ResponseEntity<?> addWorkout(String authHeader, Workout workout) {
         User user = getUserFromAuthHeader(authHeader);
         workout.setUser(user);
+        workout.clearIds(); // We want to always create a new workout, so we clear the ids
         workoutRepository.save(workout);
         return ResponseEntity.ok(workout);
     }
@@ -69,8 +75,23 @@ public class UserService {
 
     public ResponseEntity<?> deleteExerciseType(String auth, UUID id) {
         User user = getUserFromAuthHeader(auth);
-        exerciseTypeRepository.deleteByIdAndUser_Id(id, user.getId());
+        int deletedAmount = exerciseTypeRepository.deleteByIdAndUser_Id(id, user.getId());
+        if(deletedAmount == 0) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok().build();
     }
 
+    @Transactional
+    public ResponseEntity<?> updateWorkout(String auth, UUID id, Workout workout) {
+        User user = getUserFromAuthHeader(auth);
+        Optional<Workout> result = workoutRepository.findByIdAndUser_Id(id, user.getId());
+        if(result.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Workout updated = new Workout(result.get());
+        updated.updateWith(workout);
+        workoutRepository.save(updated);
+        return ResponseEntity.ok(updated);
+    }
 }
