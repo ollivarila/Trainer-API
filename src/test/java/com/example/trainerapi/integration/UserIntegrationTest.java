@@ -127,8 +127,8 @@ public class UserIntegrationTest {
         createExerciseType();
         User user = userRepository.findByUsername("user");
         List<ExerciseType> exerciseTypes = exerciseTypeRepository.findByUserId(user.getId());
-        assertThat(exerciseTypes.size()).isEqualTo(1);
-        ExerciseType created = exerciseTypes.get(0);
+        assertThat(exerciseTypes.size()).isEqualTo(13);
+        ExerciseType created = exerciseTypes.stream().filter(exerciseType -> exerciseType.getName().equals("test")).findFirst().get();
         assertThat(created.getName()).isEqualTo("test");
     }
 
@@ -141,12 +141,10 @@ public class UserIntegrationTest {
     @Test
     public void getsAllExerciseTypes() throws Exception {
         createUser("user");
-        createExerciseType();
-        createExerciseType();
         String token = JwtTokenUtil.generate("user");
         mockMvc.perform(requestFactory.getAllExerciseTypesRequest(token))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", Matchers.hasSize(2)));
+                .andExpect(jsonPath("$", Matchers.hasSize(12)));
     }
 
     @Test
@@ -158,9 +156,8 @@ public class UserIntegrationTest {
         String token = JwtTokenUtil.generate("user");
         mockMvc.perform(requestFactory.deleteExerciseTypeRequest(token, created.getId()))
                 .andExpect(status().isOk());
-        Iterable<ExerciseType> exerciseTypes = exerciseTypeRepository.findAll();
-        boolean shouldBeFalse = exerciseTypes.iterator().hasNext();
-        assertThat(shouldBeFalse).isFalse();
+        boolean exists = exerciseTypeRepository.existsById(created.getId());
+        assertThat(exists).isFalse();
     }
 
     @Test
