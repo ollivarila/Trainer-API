@@ -14,6 +14,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh './gradlew build'
+                step([$class: 'JacocoPublisher'])
             }
         }
         stage('Test') {
