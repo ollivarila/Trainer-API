@@ -1,5 +1,6 @@
 package com.example.trainerapi.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,7 @@ public class ExerciseSet implements Clearable {
      * Set can belong to one exercise, thus ManyToOne
      */
     @ManyToOne
+    @JsonIgnore
     private Exercise exercise;
 
     @Override

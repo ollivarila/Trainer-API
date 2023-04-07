@@ -1,6 +1,8 @@
 package com.example.trainerapi.integration;
 
 import com.example.trainerapi.integration.mock.MockHttpServletRequestBuilderFactory;
+import com.example.trainerapi.models.entities.Exercise;
+import com.example.trainerapi.models.repositories.ExerciseTypeRepository;
 import com.example.trainerapi.models.repositories.UserRepository;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -23,10 +25,14 @@ public class AuthenticationIntegrationTest {
     private UserRepository userRepository;
 
     @Autowired
+    private ExerciseTypeRepository exerciseRepository;
+
+    @Autowired
     private MockHttpServletRequestBuilderFactory requestFactory;
 
     @AfterEach
     public void afterEach() {
+        exerciseRepository.deleteAll();
         userRepository.deleteAll();
     }
 

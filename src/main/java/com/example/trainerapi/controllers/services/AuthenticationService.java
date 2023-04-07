@@ -8,6 +8,7 @@ import com.example.trainerapi.models.repositories.UserRepository;
 import com.example.trainerapi.requestbody.LoginRequest;
 import com.example.trainerapi.requestbody.RegisterRequest;
 import com.example.trainerapi.security.util.JwtTokenUtil;
+import com.example.trainerapi.security.util.UserCreationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,8 +23,11 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
+    private final UserCreationUtil userCreationUtil;
+
     @Autowired
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserCreationUtil userCreationUtil) {
+        this.userCreationUtil = userCreationUtil;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
@@ -41,6 +45,7 @@ public class AuthenticationService {
         String encodedPassword = passwordEncoder.encode(req.getPassword());
         User newUser = new User(req.getUsername(), encodedPassword);
         User saved = userRepository.save(newUser);
+        userCreationUtil.createDefaultExerciseTypes(saved);
         return ResponseEntity.ok(RegisterResponse.from(JwtTokenUtil.generate(req.getUsername()), saved.getUsername()));
     }
 }
