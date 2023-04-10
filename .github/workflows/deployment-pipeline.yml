@@ -19,7 +19,7 @@ jobs:
       - name: Modify Gradlew
         run: chmod -x ./gradlew
       - name: Build jar
-        run: ./gradlew build
+        run: chmod -x ./gradlew && ./gradlew build
       - name: Deploy to Fly.io
         uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
