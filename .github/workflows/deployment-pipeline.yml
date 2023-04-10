@@ -16,10 +16,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
-      - name: Modify Gradlew
-        run: chmod -x gradlew
       - name: Build jar
-        shell: /bin/bash
         run: ./gradlew jar --gradle-version 7.6.1
       - name: Deploy to Fly.io
         uses: superfly/flyctl-actions/setup-flyctl@master
