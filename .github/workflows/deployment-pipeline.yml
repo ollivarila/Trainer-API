@@ -16,6 +16,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Modify Gradlew
+        run: chmod -x gradlew
       - name: Build jar
         run: ./gradlew build
       - name: Deploy to Fly.io
