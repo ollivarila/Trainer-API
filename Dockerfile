@@ -10,4 +10,4 @@ WORKDIR /app
 EXPOSE 8080
 
 # Run the application
-CMD ["java", "-Xmx220", "-jar", "app.jar"]
+CMD ["java", "-Xmx200", "-jar", "app.jar"]
