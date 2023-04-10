@@ -17,7 +17,7 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
       - name: Build jar
-        run: ./gradlew jar --gradle-version 7.6.1
+        run: ./gradlew jar
       - name: Deploy to Fly.io
         uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
