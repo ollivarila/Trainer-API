@@ -17,7 +17,9 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
       - name: Build jar
-        run: ./gradlew jar
+        env:
+          JWT_SECRET: "test" # Just for tests
+        run: ./gradlew build
       - name: Deploy to Fly.io
         uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
