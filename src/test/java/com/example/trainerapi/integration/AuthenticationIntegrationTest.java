@@ -1,9 +1,9 @@
 package com.example.trainerapi.integration;
 
 import com.example.trainerapi.integration.mock.MockHttpServletRequestBuilderFactory;
-import com.example.trainerapi.models.entities.Exercise;
 import com.example.trainerapi.models.repositories.ExerciseTypeRepository;
 import com.example.trainerapi.models.repositories.UserRepository;
+import com.example.trainerapi.security.util.JwtTokenUtil;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -73,5 +73,14 @@ public class AuthenticationIntegrationTest {
         createUser();
         mockMvc.perform(requestFactory.authenticateRequest("wrong", "password"))
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void refreshesToken() throws Exception {
+        createUser();
+        String token = JwtTokenUtil.generate("user");
+        mockMvc.perform(requestFactory.refreshTokenRequest(token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token", Matchers.startsWith("eyJ")));
     }
 }

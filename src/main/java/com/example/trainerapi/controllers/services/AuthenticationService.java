@@ -48,4 +48,13 @@ public class AuthenticationService {
         userCreationUtil.createDefaultExerciseTypes(saved);
         return ResponseEntity.ok(RegisterResponse.from(JwtTokenUtil.generate(req.getUsername()), saved.getUsername()));
     }
+
+    public ResponseEntity<?> refresh(String authHeader) {
+        String token = authHeader.substring(7);
+        String username = JwtTokenUtil.getUsername(token);
+        if(username == null){
+            return ResponseEntity.badRequest().body(ErrorResponse.of("Invalid token"));
+        }
+        return ResponseEntity.ok(AuthenticateResponse.of(JwtTokenUtil.generate(username)));
+    }
 }

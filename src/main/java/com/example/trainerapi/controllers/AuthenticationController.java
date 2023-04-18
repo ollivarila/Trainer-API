@@ -40,4 +40,15 @@ public class AuthenticationController {
     public ResponseEntity<?> register(@RequestBody RegisterRequest req){
         return authenticationService.register(req);
     }
+
+    /**
+     * Refreshes a JWT token
+     * @param authHeader Authorization header containing the JWT token
+     * @return ResponseEntity containing the new JWT token or an error
+     */
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refresh(@RequestHeader("Authorization") String authHeader){
+        return authenticationService.refresh(authHeader);
+    }
 }

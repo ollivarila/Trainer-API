@@ -106,4 +106,11 @@ public class MockHttpServletRequestBuilderFactory {
                 .accept(MediaType.APPLICATION_JSON)
                 .content(json);
     }
+
+    public RequestBuilder refreshTokenRequest(String token){
+        return post("/api/auth/refresh")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+    }
 }
