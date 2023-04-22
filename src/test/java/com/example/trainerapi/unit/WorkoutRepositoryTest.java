@@ -81,4 +81,20 @@ public class WorkoutRepositoryTest {
         workoutRepository.deleteByIdAndUser_Id(workout.getId(), user.getId());
         assertThat(workoutRepository.findAll().iterator().hasNext()).isFalse();
     }
+
+    @Test
+    public void savesWorkoutAsShared(){
+        User user = new User("John","password");
+        userRepository.save(user);
+        Workout workout = new Workout();
+        workout.setName("test");
+        workout.setUser(user);
+        workout.setShared(true);
+        workoutRepository.save(workout);
+        Iterable<Workout> workouts = workoutRepository.findAll();
+        assertThat(workouts.iterator().hasNext()).isTrue();
+
+        Workout foundWorkout = workoutRepository.findAll().iterator().next();
+        assertThat(foundWorkout.isShared()).isTrue();
+    }
 }

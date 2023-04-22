@@ -49,6 +49,11 @@ public class Workout implements Clearable{
     private boolean isPreset;
 
     /**
+     * Whether the workout is shared or not
+     */
+    private boolean shared;
+
+    /**
      * User who created the workout.
      * User can have many workouts, thus ManyToOne
      */
@@ -71,6 +76,7 @@ public class Workout implements Clearable{
         this.isPreset = workout.isPreset;
         this.user = workout.user;
         this.exercises = workout.exercises;
+        this.shared = workout.shared;
     }
     @Override
     public String toString(){
