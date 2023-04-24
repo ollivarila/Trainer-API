@@ -94,4 +94,13 @@ public class UserService {
         workoutRepository.save(updated);
         return ResponseEntity.ok(updated);
     }
+
+    public ResponseEntity<?> getUserWorkouts(String name) {
+        User user = userRepository.findByUsername(name);
+        if(user != null){
+            return ResponseEntity.ok(workoutRepository.findByUserId(user.getId()));
+        }
+        return null;
+
+    }
 }

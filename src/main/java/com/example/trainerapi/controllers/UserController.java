@@ -34,6 +34,14 @@ public class UserController {
         return userService.getWorkouts(auth);
     }
 
+
+    @GetMapping("/userWorkouts")
+    public ResponseEntity<?> getUserWorkouts(@RequestHeader("Name") String name) {
+        return userService.getUserWorkouts(name);
+    }
+
+
+
     /**
      * Add a workout for the user. This always creates a new workout.
      * @param auth The authorization header.
