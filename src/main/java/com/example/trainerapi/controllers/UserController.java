@@ -36,13 +36,12 @@ public class UserController {
     }
 
 
-    @GetMapping("/{username}/workouts/")
+    @GetMapping("/{username}/workouts")
     public ResponseEntity<?> getUserWorkouts(@PathVariable("username") String username) {
         System.out.println("Username: " + username);
         System.out.println("Username: " + username);
         System.out.println("Username: " + username);
-        return ResponseEntity.ok(new ArrayList<>());
-        // userService.getSharedWorkouts(username);
+        return userService.getSharedWorkouts(username);
     }
 
 
