@@ -97,4 +97,5 @@ public class WorkoutRepositoryTest {
         Workout foundWorkout = workoutRepository.findAll().iterator().next();
         assertThat(foundWorkout.isShared()).isTrue();
     }
+
 }

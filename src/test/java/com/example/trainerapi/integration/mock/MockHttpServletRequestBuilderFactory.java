@@ -66,6 +66,13 @@ public class MockHttpServletRequestBuilderFactory {
                 .accept(MediaType.APPLICATION_JSON);
     }
 
+    public RequestBuilder getSharedWorkouts(String token, String userName) {
+        return get(String.format("/api/user/%s/workouts", userName))
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+    }
+
     public RequestBuilder createExerciseTypeRequest(String token, String name) {
         ExerciseType exerciseType = new ExerciseType(name);
         String json = createJson(exerciseType);

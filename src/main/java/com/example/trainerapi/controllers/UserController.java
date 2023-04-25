@@ -35,9 +35,9 @@ public class UserController {
     }
 
 
-    @GetMapping("/userWorkouts")
-    public ResponseEntity<?> getUserWorkouts(@RequestHeader("Name") String name) {
-        return userService.getUserWorkouts(name);
+    @GetMapping("/{username}/workouts/")
+    public ResponseEntity<?> getUserWorkouts(@PathVariable String username) {
+        return userService.getSharedWorkouts(username);
     }
 
 

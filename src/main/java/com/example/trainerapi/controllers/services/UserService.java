@@ -95,12 +95,13 @@ public class UserService {
         return ResponseEntity.ok(updated);
     }
 
-    public ResponseEntity<?> getUserWorkouts(String name) {
+    public ResponseEntity<?> getSharedWorkouts(String name) {
         User user = userRepository.findByUsername(name);
-        if(user != null){
-            return ResponseEntity.ok(workoutRepository.findByUserId(user.getId()));
+        Optional<Workout> result = workoutRepository.findSharedAndUser_Id(true, user.getId());
+        if(result.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
-        return null;
+        return ResponseEntity.ok(result);
 
     }
 }

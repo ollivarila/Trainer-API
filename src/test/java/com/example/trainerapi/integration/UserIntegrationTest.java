@@ -18,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -77,10 +78,35 @@ public class UserIntegrationTest {
         createUser("user");
         createWorkout("user");
         createWorkout("user");
+
         String token = JwtTokenUtil.generate("user");
         mockMvc.perform(requestFactory.getAllWorkoutsRequest(token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(2)));
+
+
+
+    }
+
+    @Test
+    public void getsSharedWorkouts() throws Exception {
+        createUser("user");
+        createWorkout("user");
+        createWorkout("user");
+
+        Iterator<Workout> workouts = workoutRepository.findAll().iterator();
+        while (workouts.hasNext()){
+            Workout w = workouts.next();
+            w.setShared(true);
+            workoutRepository.save(w);
+        }
+
+        String token = JwtTokenUtil.generate("user");
+        mockMvc.perform(requestFactory.getSharedWorkouts(token, "user"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(2)));
+
+
     }
 
     @Test
