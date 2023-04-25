@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -36,8 +37,12 @@ public class UserController {
 
 
     @GetMapping("/{username}/workouts/")
-    public ResponseEntity<?> getUserWorkouts(@PathVariable String username) {
-        return userService.getSharedWorkouts(username);
+    public ResponseEntity<?> getUserWorkouts(@PathVariable("username") String username) {
+        System.out.println("Username: " + username);
+        System.out.println("Username: " + username);
+        System.out.println("Username: " + username);
+        return ResponseEntity.ok(new ArrayList<>());
+        // userService.getSharedWorkouts(username);
     }
 
 

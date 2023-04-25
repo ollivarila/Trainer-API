@@ -25,6 +25,6 @@ public interface WorkoutRepository extends CrudRepository<Workout, UUID> {
 
     Optional<Workout> findByIdAndUser_Id(UUID id, UUID user);
 
-    Optional<Workout> findSharedAndUser_Id(boolean shared, UUID user);
+    List<Workout> findBySharedAndUser_Id(boolean shared, UUID user);
 
 }

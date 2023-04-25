@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -96,6 +99,26 @@ public class WorkoutRepositoryTest {
 
         Workout foundWorkout = workoutRepository.findAll().iterator().next();
         assertThat(foundWorkout.isShared()).isTrue();
+    }
+
+    @Test
+    public void findsSharedWorkouts(){
+        User user = new User("John","password");
+        userRepository.save(user);
+        Workout workout = new Workout();
+        workout.setName("test");
+        workout.setUser(user);
+        workout.setShared(true);
+
+        workoutRepository.save(workout);
+
+        List<Workout> workouts = workoutRepository.findBySharedAndUser_Id(true, user.getId());
+        assertThat(workouts.iterator().hasNext()).isTrue();
+
+        List<Workout> notWorkouts = workoutRepository.findBySharedAndUser_Id(false, user.getId());
+        assertThat(notWorkouts.iterator().hasNext()).isFalse();
+
+
     }
 
 }

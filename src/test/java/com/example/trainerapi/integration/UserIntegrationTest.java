@@ -94,9 +94,12 @@ public class UserIntegrationTest {
         createWorkout("user");
         createWorkout("user");
 
-        Iterator<Workout> workouts = workoutRepository.findAll().iterator();
-        while (workouts.hasNext()){
-            Workout w = workouts.next();
+        User user = userRepository.findByUsername("user");
+
+        List<Workout> workouts = workoutRepository.findBySharedAndUser_Id(false, user.getId());
+        Iterator<Workout> it = workouts.iterator();
+        while (it.hasNext()){
+            Workout w = it.next();
             w.setShared(true);
             workoutRepository.save(w);
         }

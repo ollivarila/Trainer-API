@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -97,8 +98,8 @@ public class UserService {
 
     public ResponseEntity<?> getSharedWorkouts(String name) {
         User user = userRepository.findByUsername(name);
-        Optional<Workout> result = workoutRepository.findSharedAndUser_Id(true, user.getId());
-        if(result.isEmpty()) {
+        List<Workout> result = workoutRepository.findBySharedAndUser_Id(true, user.getId());
+        if(user == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(result);
