@@ -18,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -223,4 +224,22 @@ public class UserIntegrationTest {
         assertThat(workout.getName()).isEqualTo("updated");
         assertThat(workout.isPreset()).isTrue();
     }
+
+
+    @Test
+    public void getsAllUsers() throws Exception {
+        createUser("testi");
+        createUser("testi2");
+        createUser("testi3");
+
+        mockMvc.perform(requestFactory.getAllUsersRequest())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(3)))
+                .andExpect(jsonPath("$[0]", Matchers.is("testi")))
+                .andExpect(jsonPath("$[1]", Matchers.is("testi2")))
+                .andExpect(jsonPath("$[2]", Matchers.is("testi3")));
+
+
+        }
+
 }
