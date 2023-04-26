@@ -120,4 +120,10 @@ public class MockHttpServletRequestBuilderFactory {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
     }
+
+    public RequestBuilder getAllUsersRequest(){
+        return get("/api/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+    }
 }

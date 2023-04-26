@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
@@ -105,4 +103,22 @@ public class UserService {
         return ResponseEntity.ok(result);
 
     }
+
+    public ResponseEntity<?> getAllUsers() {
+        Iterable<User> result = userRepository.findAll();
+        List<String> users = new ArrayList<>();
+        Iterator<User> it = result.iterator();
+
+        while (it.hasNext()){
+            users.add(it.next().getUsername());
+        }
+
+        if(users == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(users);
+
+    }
+
+
 }
