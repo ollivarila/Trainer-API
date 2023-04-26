@@ -38,9 +38,6 @@ public class UserController {
 
     @GetMapping("/{username}/workouts")
     public ResponseEntity<?> getUserWorkouts(@PathVariable("username") String username) {
-        System.out.println("Username: " + username);
-        System.out.println("Username: " + username);
-        System.out.println("Username: " + username);
         return userService.getSharedWorkouts(username);
     }
 
