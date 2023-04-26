@@ -96,7 +96,7 @@ public class Workout implements Clearable{
         this.workoutStarted = workout.workoutStarted;
         this.workoutEnded = workout.workoutEnded;
         this.isPreset = workout.isPreset;
-        this.user = workout.user;
         this.exercises = workout.exercises;
+        this.shared = workout.shared;
     }
 }

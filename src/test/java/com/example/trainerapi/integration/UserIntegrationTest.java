@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -222,5 +223,24 @@ public class UserIntegrationTest {
         Workout workout = workoutRepository.findById(created.getId()).get();
         assertThat(workout.getName()).isEqualTo("updated");
         assertThat(workout.isPreset()).isTrue();
+    }
+
+    @Test
+    public void updatesWorkoutIfUserNull() throws Exception {
+        createUser("user");
+        createWorkout("user");
+        Workout created = workoutRepository.findAll().iterator().next();
+        created.setName("updated");
+        created.setPreset(true);
+        created.setUser(null);
+        created.setShared(true);
+
+        mockMvc.perform(requestFactory.updateWorkoutRequest(JwtTokenUtil.generate("user"), created))
+                .andExpect(status().isOk());
+
+        Workout workout = workoutRepository.findById(created.getId()).get();
+        assertThat(workout.getName()).isEqualTo("updated");
+        assertThat(workout.isPreset()).isTrue();
+        assertThat(workout.isShared()).isTrue();
     }
 }
