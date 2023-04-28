@@ -76,11 +76,11 @@ public class QuoteIntegrationTest {
 
         mockMvc.perform(requestFactory.getQuotesByLangRequest("fi"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", Matchers.is("testi2")));
+                .andExpect(jsonPath("$.quote", Matchers.is("testi2")));
 
         mockMvc.perform(requestFactory.getQuotesByLangRequest("en"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", Matchers.anyOf(Matchers.is("testi"), Matchers.is("testi5"))));
+                .andExpect(jsonPath("$.quote", Matchers.anyOf(Matchers.is("testi"), Matchers.is("testi5"))));
 
 
 

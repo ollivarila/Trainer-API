@@ -1,5 +1,6 @@
 package com.example.trainerapi.controllers.services;
 
+import com.example.trainerapi.controllers.responses.QuoteResponse;
 import com.example.trainerapi.models.entities.Quote;
 import com.example.trainerapi.models.entities.User;
 import com.example.trainerapi.models.repositories.QuoteRepository;
@@ -31,7 +32,7 @@ public class QuoteService {
 
         if(!quotes.isEmpty()){
             Quote quote = quotes.get((int) (Math.random() * quotes.size()));
-            return ResponseEntity.ok().body(quote.getQuote());
+            return ResponseEntity.ok(new QuoteResponse(quote.getQuote()));
         }
         return  ResponseEntity.badRequest().body("No quotes found for language code: " + langCode);
 
