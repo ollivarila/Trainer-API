@@ -1,6 +1,7 @@
 package com.example.trainerapi.integration.mock;
 
 import com.example.trainerapi.models.entities.ExerciseType;
+import com.example.trainerapi.models.entities.Quote;
 import com.example.trainerapi.models.entities.Workout;
 import com.example.trainerapi.requestbody.LoginRequest;
 import com.example.trainerapi.requestbody.RegisterRequest;
@@ -84,6 +85,16 @@ public class MockHttpServletRequestBuilderFactory {
                 .content(json);
     }
 
+    public RequestBuilder createQuoteRequest(String quote, String langCode) throws JsonProcessingException {
+
+        String json = createJson(new Quote(quote, langCode));
+
+        return post("/api/quotes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
+    }
+
     public RequestBuilder getAllExerciseTypesRequest(String token) {
         return get("/api/user/exercisetypes")
                 .header("Authorization", "Bearer " + token)
@@ -123,6 +134,12 @@ public class MockHttpServletRequestBuilderFactory {
 
     public RequestBuilder getAllUsersRequest(){
         return get("/api/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+    }
+
+    public RequestBuilder getQuotesByLangRequest(String langCode){
+        return get("/api/quotes/" + langCode)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
     }
