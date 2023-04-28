@@ -31,7 +31,7 @@ public class QuoteService {
 
         if(!quotes.isEmpty()){
             Quote quote = quotes.get((int) (Math.random() * quotes.size()));
-            return ResponseEntity.ok(quote.getQuote());
+            return ResponseEntity.ok().body(quote.getQuote());
         }
         return  ResponseEntity.badRequest().body("No quotes found for language code: " + langCode);
 
