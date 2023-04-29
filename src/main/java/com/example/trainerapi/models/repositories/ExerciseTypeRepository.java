@@ -8,9 +8,18 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Repository operations for Exercisetypes
+ */
+
 @Repository
 public interface ExerciseTypeRepository extends CrudRepository<ExerciseType, UUID>{
 
+    /**
+     * finds exercisetypes by user id
+     * @param userId user id
+     * @return list of exercisetypes matching user id
+     */
     List<ExerciseType> findByUserId(UUID userId);
 
     /**

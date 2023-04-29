@@ -40,6 +40,9 @@ public class Exercise implements Clearable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<ExerciseSet> sets = new ArrayList<>();
 
+    /**
+     * clears all id's from sets
+     * */
     @Override
     public void clearIds() {
         id = null;

@@ -6,6 +6,11 @@ import lombok.Data;
 
 import java.util.UUID;
 
+/**
+ * Quote entity to store quotes in the database
+ * String quote quote
+ * String langCode language code for the quote
+ */
 @Data
 @Entity
 public class Quote {

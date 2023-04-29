@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * handles methods called by quotecontroller
+ */
+
 @Service
 public class QuoteService {
 
@@ -23,6 +27,11 @@ public class QuoteService {
         this.quoteRepository = quoteRepository;
     }
 
+    /**
+     * gets a random quote from database matching in given language
+     * @param langCode language code
+     * @return QuoteResponce quote
+     */
     public ResponseEntity<?> getRandomQuoteByLang(String langCode) {
 
         String lang = langCode.toLowerCase();
@@ -37,6 +46,12 @@ public class QuoteService {
         return  ResponseEntity.badRequest().body("No quotes found for language code: " + langCode);
 
     }
+
+    /**
+     * adds quote to database
+     * @param quote Quote
+     * @return added quote
+     */
 
     public ResponseEntity<?> addQuote(Quote quote){
         return ResponseEntity.ok(quoteRepository.save(quote));

@@ -36,6 +36,11 @@ public class UserController {
     }
 
 
+    /**
+     * gets shared workouts of given user
+     * @param username username to search workouts for
+     * @return list of workouts from given user that are shared
+     */
     @GetMapping("/{username}/workouts")
     public ResponseEntity<?> getUserWorkouts(@PathVariable("username") String username) {
         return userService.getSharedWorkouts(username);
@@ -87,6 +92,13 @@ public class UserController {
         return userService.getExerciseTypes(auth);
     }
 
+
+    /**
+     * Add a new exercisetype to database
+     * @param auth the authorization header
+     * @param exerciseType exercisetype to save
+     * @return added exercisetype
+     */
     @PostMapping("/exercisetypes")
     public ResponseEntity<?> addExerciseType(@RequestHeader("Authorization") String auth, @RequestBody ExerciseType exerciseType) {
         return userService.addExerciseType(auth, exerciseType);

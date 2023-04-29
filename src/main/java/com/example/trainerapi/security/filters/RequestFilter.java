@@ -12,10 +12,22 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * filter for logging requests sent to the api
+ */
 @Service
 public class RequestFilter extends OncePerRequestFilter {
 
     Logger logger = LoggerFactory.getLogger("Log");
+
+    /**
+     * logs reguests coming to the api
+     * @param request HttpServletRequest request
+     * @param response HttpServletResponse response
+     * @param filterChain Filterchain filterchain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         boolean headerValid = true;

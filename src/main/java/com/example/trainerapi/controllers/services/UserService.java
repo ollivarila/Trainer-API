@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+/**
+ * handles methods called by usercontroller and manyuserscontroller
+ */
 
 @Service
 public class UserService {
@@ -30,11 +33,23 @@ public class UserService {
         this.exerciseTypeRepository = exerciseTypeRepository;
     }
 
+
+    /**
+     * gets all workouts for the user
+     * @param authHeader authorization header
+     * @return list of workouts containing all workouts of the user
+     */
     public ResponseEntity<?> getWorkouts(String authHeader) {
         User user = getUserFromAuthHeader(authHeader);
         return ResponseEntity.ok(workoutRepository.findByUserId(user.getId()));
     }
 
+    /**
+     * deletes workout by id
+     * @param authHeader authorization header
+     * @param workoutId id of the workout to be deleted
+     * @return return code 200
+     */
     public ResponseEntity<?> deleteWorkout(String authHeader, UUID workoutId) {
         User user = getUserFromAuthHeader(authHeader);
         int deletedAmount = workoutRepository.deleteByIdAndUser_Id(workoutId, user.getId());
@@ -45,6 +60,12 @@ public class UserService {
     }
 
 
+    /**
+     * adds workout for the user sending the request
+     * @param authHeader authorization header
+     * @param workout workout to be added
+     * @return added workout
+     */
     public ResponseEntity<?> addWorkout(String authHeader, Workout workout) {
         User user = getUserFromAuthHeader(authHeader);
         workout.setUser(user);
@@ -53,17 +74,34 @@ public class UserService {
         return ResponseEntity.ok(workout);
     }
 
+    /**
+     * gets all exercisetypes for the user
+     * @param auth authorization header
+     * @return list of exercise types
+     */
     public ResponseEntity<?> getExerciseTypes(String auth) {
         User user = getUserFromAuthHeader(auth);
         return ResponseEntity.ok(exerciseTypeRepository.findByUserId(user.getId()));
     }
 
+    /**
+     * adds exercisetype for user sending the request
+     * @param auth authorization header
+     * @param exerciseType exercisetype to be added
+     * @return added exercise type
+     */
     public ResponseEntity<?> addExerciseType(String auth, ExerciseType exerciseType) {
         User user = getUserFromAuthHeader(auth);
         exerciseType.setUser(user);
         exerciseTypeRepository.save(exerciseType);
         return ResponseEntity.ok(exerciseType);
     }
+
+    /**
+     * fetches user from the authorization header
+     * @param header authorization header
+     * @return User
+     */
 
     private User getUserFromAuthHeader(String header){
         String token = header.substring(7);
@@ -72,6 +110,12 @@ public class UserService {
     }
 
 
+    /**
+     * deletes exercisetype from dp
+     * @param auth authorization header
+     * @param id id for the exercisetype to be deleted
+     * @return return code 200
+     */
     public ResponseEntity<?> deleteExerciseType(String auth, UUID id) {
         User user = getUserFromAuthHeader(auth);
         int deletedAmount = exerciseTypeRepository.deleteByIdAndUser_Id(id, user.getId());
@@ -81,6 +125,13 @@ public class UserService {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * updates workout
+     * @param auth authorization header
+     * @param id id of the workout to update
+     * @param workout the new workout
+     * @return updated workout
+     */
     @Transactional
     public ResponseEntity<?> updateWorkout(String auth, UUID id, Workout workout) {
         User user = getUserFromAuthHeader(auth);
@@ -94,6 +145,11 @@ public class UserService {
         return ResponseEntity.ok(updated);
     }
 
+    /**
+     * gets shared workouts of given user
+     * @param name username of the user we want the workouts from
+     * @return list of shared workuts of the user given
+     */
     public ResponseEntity<?> getSharedWorkouts(String name) {
         User user = userRepository.findByUsername(name);
         List<Workout> result = workoutRepository.findBySharedAndUser_Id(true, user.getId());
@@ -103,6 +159,11 @@ public class UserService {
         return ResponseEntity.ok(result);
 
     }
+
+    /**
+     * gets all usernames from database
+     * @return list of all usernames from database
+     */
 
     public ResponseEntity<?> getAllUsers() {
         Iterable<User> result = userRepository.findAll();
