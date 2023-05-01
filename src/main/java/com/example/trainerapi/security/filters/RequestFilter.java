@@ -41,9 +41,10 @@ public class RequestFilter extends OncePerRequestFilter {
         }else {
             if(!header.startsWith("Bearer eyJ")){
                 headerValid = false;
+            }else{
+                String token = header.substring(7);
+                username = JwtTokenUtil.getUsername(token);
             }
-            String token = header.substring(7);
-            username = JwtTokenUtil.getUsername(token);
         }
 
         logger.info("Request: {} || Method: {} || Valid auth header present: {} || User: {}", request.getRequestURI(), request.getMethod(),headerValid, username);
