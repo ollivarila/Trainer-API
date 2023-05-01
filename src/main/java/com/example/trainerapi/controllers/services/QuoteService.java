@@ -39,11 +39,16 @@ public class QuoteService {
         List<Quote> quotes = quoteRepository.findByLangCode(lang);
 
 
-        if(!quotes.isEmpty()){
-            Quote quote = quotes.get((int) (Math.random() * quotes.size()));
-            return ResponseEntity.ok(new QuoteResponse(quote.getQuote()));
+        if(quotes.isEmpty()){
+            quotes = quoteRepository.findByLangCode("en");
         }
-        return  ResponseEntity.badRequest().body("No quotes found for language code: " + langCode);
+
+        if(quotes.isEmpty()){
+            return ResponseEntity.badRequest().body("No quotes found in database");
+        }
+
+        Quote quote = quotes.get((int) (Math.random() * quotes.size()));
+        return ResponseEntity.ok(new QuoteResponse(quote.getQuote()));
 
     }
 

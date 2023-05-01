@@ -71,6 +71,7 @@ public class QuoteIntegrationTest {
 
     }
 
+
     @Test
     public void qetsQuotesByLang() throws Exception{
 
@@ -82,7 +83,10 @@ public class QuoteIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.quote", Matchers.anyOf(Matchers.is("testi"), Matchers.is("testi5"))));
 
-
+        //default to english if no match for the lang code
+        mockMvc.perform(requestFactory.getQuotesByLangRequest("fsfsf"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.quote", Matchers.anyOf(Matchers.is("testi"), Matchers.is("testi5"))));
 
 
     }
